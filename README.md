@@ -256,5 +256,9 @@ A practical order for reuse is:
 5. Run Fig. 5 benchmarking and diagnostics using the selected model outputs.
 6. Use the Fig. 6 scripts if semantic-model dependencies are available.
 
+## Citation
+Code DOI: 10.5281/zenodo.19095346
+Data DOI: 10.5281/zenodo.19095729
+
 ## Contact
 For questions about code execution, processed data dependencies, or raw-data access, please contact the corresponding author listed in the manuscript.
