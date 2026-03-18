@@ -1,0 +1,47 @@
+paths:
+  leaf_table: "data/raw/GCMS_leaf.csv"
+  peel_table: "data/raw/GCMS_peel.csv"
+  ssot_long: "data/ssot/ssot_long.parquet"
+  ssot_cultivar_stage: "data/ssot/ssot_cultivar_stage.parquet"
+
+cols:
+  sample_id: "SampleID"
+  cultivar: "Cultivar"
+  organ: "Organ"
+  stage: "Stage"
+  batch: "Batch"
+  rep: "Rep"
+
+stages:
+  ordered: ["S1","S2","S3","S4"]
+  target_peel_stage: "S4"
+  leaf_organ_label: "Leaf"
+  peel_organ_label: "Peel"
+
+panels:
+  fusion_mode: "concat"
+  add_missing_indicators: true
+  candidates: ["S1","S2","S3","S4","S1+S2","S1+S4","S1+S2+S3+S4"]
+  trajectory:
+    enabled: false
+    stats: ["slope","auc","delta_S4_S1"]
+
+model:
+  random_state: 42
+  n_jobs: 8
+  min_pos: 8
+  log1p: true
+
+  gate_mode: hard
+  tau_strategy: match_prevalence
+  class_weight: balanced
+  p_thresh: 0.5
+
+  classifier:
+    C: 1.0
+    max_iter: 5000
+  regressor:
+    ridge_alpha: 1.0
+
+eval:
+  topk_fracs: [0.05, 0.10, 0.20]
