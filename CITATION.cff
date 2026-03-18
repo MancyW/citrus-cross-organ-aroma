@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Cross-organ leaf-to-peel framework for citrus peel aroma prediction"
+message: "If you use this repository, please cite the code archive and the associated manuscript."
+type: software
+authors:
+  - family-names: "Manxi"
+    given-names: "Wu"
+repository-code: "https://github.com/MancyW/citrus-cross-organ-aroma"
+abstract: "Code for cross-organ leaf-to-peel prediction of citrus peel aroma, including VOC profiling, predictive modeling, and odor-semantic analyses."
+keywords:
+  - citrus
+  - aroma
+  - VOC
+  - metabolomics
+  - machine learning
+  - odor semantics
+license: MIT
+version: "v1.0.0"
+date-released: 2026-03-18
