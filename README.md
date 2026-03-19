@@ -29,7 +29,7 @@ To run the code, place the processed data files from the Zenodo data release int
 ### External data package
 Processed data and Source Data files are available at:
 
-- **Zenodo data DOI:** `[to be added]`
+- **Zenodo data DOI:** `10.5281/zenodo.19095346`
 
 ### Journal-facing Source Data
 The final figure-linked Source Data workbooks are deposited separately and correspond to:
