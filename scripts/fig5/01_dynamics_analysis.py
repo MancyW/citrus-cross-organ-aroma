@@ -8,9 +8,9 @@ import numpy as np
 
 import pandas as pd
 
-from nc_scripts.common.paths import find_repo_root, ensure_dir
+from src.fig5_common.paths import find_repo_root, ensure_dir
 
-from nc_scripts.common import dataio, weights as wio, stats
+from src.fig5_common import dataio, weights as wio, stats
 
 def _concat_leaf(ssot_cs: pd.DataFrame, stages: list[str], vocs: list[str] | None):
 

@@ -480,9 +480,11 @@ def plot_fig7d(root: Path, outdir: Path):
 
         ax.set_ylim(0, min(1.0, max(max(obs), max(null_hi))*1.25 + 1e-6))
 
-        pv = f"p(top1)={fmt_p(row['p_top1'])}\n"
-             f"p(top5)={fmt_p(row['p_top5'])}\n"
-             f"p(top10)={fmt_p(row['p_top10'])}"
+        pv = (
+            f"p(top1)={fmt_p(row['p_top1'])}\n"
+            f"p(top5)={fmt_p(row['p_top5'])}\n"
+            f"p(top10)={fmt_p(row['p_top10'])}"
+        )
 
         ax.text(0.98, 0.98, pv, transform=ax.transAxes, ha="right", va="top",
 
@@ -612,7 +614,11 @@ def main():
 
     ap = argparse.ArgumentParser()
 
-    ap.add_argument("--root", type=str, default="${PROJECT_ROOT}")
+    ap.add_argument(
+    "--root",
+    type=str,
+    default=str(Path(__file__).resolve().parents[2]),
+    )
 
     ap.add_argument("--out", type=str, default="results/Fig6_final_paletteLocked")
 

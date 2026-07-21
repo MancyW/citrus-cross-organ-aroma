@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd ${PROJECT_ROOT}
+PROJECT_ROOT="${PROJECT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+cd "$PROJECT_ROOT"
+export PYTHONPATH="$PROJECT_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
-CFG_LOCO="configs/base.yaml"
-CFG_FITALL="configs/fitall.yaml"
+CFG_LOCO="configs/fig4/base.yaml"
+CFG_FITALL="configs/fig4/fitall.yaml"
 
 PANELS=("S1+S4" "S4")
 
@@ -25,18 +27,18 @@ for PANEL in "${PANELS[@]}"; do
   echo "=============================="
   echo "[A] LOCO EVAL panel=$PANEL"
   echo "=============================="
-  python -m src.run.export_pred_vectors --config "$CFG_LOCO" --panel "$PANEL"
+  python -m src.fig4.run.export_pred_vectors --config "$CFG_LOCO" --panel "$PANEL"
   RUN_LOCO="$(ls -dt results/pred_vectors/run_*_"$TAG" | head -1)"
   echo "[LOCO] run_dir=$RUN_LOCO"
 
-  python -m src.run.qc_alignment --pred_long "$RUN_LOCO/pred_vectors_long.parquet"
+  python -m src.fig4.run.qc_alignment --pred_long "$RUN_LOCO/pred_vectors_long.parquet"
 
-  python -m src.run.ideotype_ranking_v3 \
+  python -m src.fig4.run.ideotype_ranking_v3 \
     --pred_long "$RUN_LOCO/pred_vectors_long.parquet" \
     --ideotype_mode cultivar --anchor MTH \
     --space clr --metric cosine
 
-  python -m src.run.ideotype_ranking_v3 \
+  python -m src.fig4.run.ideotype_ranking_v3 \
     --pred_long "$RUN_LOCO/pred_vectors_long.parquet" \
     --ideotype_mode cultivar --anchor MTH \
     --space absolute_log1p --metric cosine
@@ -45,11 +47,11 @@ for PANEL in "${PANELS[@]}"; do
   echo "=============================="
   echo "[B] FITALL TRAIN panel=$PANEL"
   echo "=============================="
-  python -m src.run.export_pred_vectors_fitall --config "$CFG_FITALL" --panel "$PANEL"
+  python -m src.fig4.run.export_pred_vectors_fitall --config "$CFG_FITALL" --panel "$PANEL"
   RUN_FITALL="$(ls -dt results/pred_vectors/run_*_"$TAG"_FITALL | head -1)"
   echo "[FITALL] run_dir=$RUN_FITALL"
 
-  python -m src.run.postprocess_threshold_by_true_quantile \
+  python -m src.fig4.run.postprocess_threshold_by_true_quantile \
     --pred_long "$RUN_FITALL/pred_vectors_long.parquet" \
     --quantile "$Q" --space "$SPACE" --min_pos "$MIN_POS" \
     --keep_raw --report
@@ -60,14 +62,14 @@ for PANEL in "${PANELS[@]}"; do
   fi
   echo "[FITALL] thresholded=$THR_PATH"
 
-  python -m src.run.qc_alignment --pred_long "$THR_PATH"
+  python -m src.fig4.run.qc_alignment --pred_long "$THR_PATH"
 
-  python -m src.run.ideotype_ranking_v3 \
+  python -m src.fig4.run.ideotype_ranking_v3 \
     --pred_long "$THR_PATH" \
     --ideotype_mode cultivar --anchor MTH \
     --space clr --metric cosine
 
-  python -m src.run.ideotype_ranking_v3 \
+  python -m src.fig4.run.ideotype_ranking_v3 \
     --pred_long "$THR_PATH" \
     --ideotype_mode cultivar --anchor MTH \
     --space absolute_log1p --metric cosine

@@ -48,7 +48,7 @@ def main():
 
     ap = argparse.ArgumentParser()
 
-    ap.add_argument("--config", default="configs/base.yaml")
+    ap.add_argument("--config", default="configs/fig4/base.yaml")
 
     args = ap.parse_args()
 

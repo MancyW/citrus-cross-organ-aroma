@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="$(pwd)"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OUTDIR=""
 ANCHOR="MTH"
 X_STAGES=()
@@ -53,6 +53,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+REPO="$(cd "$REPO" && pwd)"
+cd "$REPO"
+export PYTHONPATH="$REPO${PYTHONPATH:+:$PYTHONPATH}"
+
 if [[ ${#X_STAGES[@]} -lt 1 ]]; then
   echo "ERROR: --x_stages S1 S4 ..."
   exit 1
@@ -86,10 +90,10 @@ SSOT_CS_CLEAN="${REPO}/data/ssot/ssot_cultivar_stage.clean.parquet"
 
 if [[ ! -f "$SSOT_LONG_CLEAN" || ! -f "$SSOT_CS_CLEAN" ]]; then
   echo "[NC CLEAN] clean SSOT not found -> building from data/raw/GCMS_leaf.csv + GCMS_peel.csv (dropping metadata cols)"
-  python -m nc_scripts.common.00_build_clean_ssot --repo "$REPO"
+  python -m src.fig5_common.00_build_clean_ssot --repo "$REPO"
 fi
 
-python -m nc_scripts.module1_interpretability.01_interpretability \
+python -m scripts.fig5.01_interpretability \
   --repo "$REPO" --outdir "$OUTDIR" --anchor "$ANCHOR" \
   --x_stages "${X_STAGES[@]}" --y_stage "$Y_STAGE" \
   --weights_csv "$WEIGHTS_CSV" \
@@ -97,7 +101,7 @@ python -m nc_scripts.module1_interpretability.01_interpretability \
   --ssot_cultivar_stage "$SSOT_CS_CLEAN" \
   --focus_mode "$FOCUS_MODE" --focus_topN "$FOCUS_TOPN" --sign_align "$SIGN_ALIGN"
 
-python -m nc_scripts.module2_dynamics.01_dynamics_analysis \
+python -m scripts.fig5.01_dynamics_analysis \
   --repo "$REPO" --outdir "$OUTDIR" --anchor "$ANCHOR" \
   --x_stages "${X_STAGES[@]}" --y_stage "$Y_STAGE" \
   --weights_csv "$WEIGHTS_CSV" --pred_vectors_long "$PRED_VECTORS_LONG" \
@@ -105,7 +109,7 @@ python -m nc_scripts.module2_dynamics.01_dynamics_analysis \
   --ssot_cultivar_stage "$SSOT_CS_CLEAN" \
   --focus_mode "$FOCUS_MODE" --focus_topN "$FOCUS_TOPN" --sign_align "$SIGN_ALIGN"
 
-python -m nc_scripts.module3_failure.01_failure_analysis \
+python -m scripts.fig5.01_failure_analysis \
   --repo "$REPO" --outdir "$OUTDIR" --anchor "$ANCHOR" \
   --x_stages "${X_STAGES[@]}" --y_stage "$Y_STAGE" \
   --weights_csv "$WEIGHTS_CSV" --pred_vectors_long "$PRED_VECTORS_LONG" \
@@ -127,6 +131,6 @@ if [[ "$SKIP_SKLEARN" == "1" ]]; then BASELINE_ARGS+=(--skip_sklearn); fi
 if [[ "$DO_SHUFFLE_Y" == "1" ]]; then BASELINE_ARGS+=(--do_shuffle_y); fi
 if [[ "$DO_SHUFFLE_WEIGHTS" == "1" ]]; then BASELINE_ARGS+=(--do_shuffle_weights); fi
 
-python -m nc_scripts.module4_baselines.01_run_baselines_loco "${BASELINE_ARGS[@]}"
+python -m scripts.fig5.01_run_baselines_loco "${BASELINE_ARGS[@]}"
 
 echo "[NC CLEAN] Done. Outputs in: $OUTDIR"

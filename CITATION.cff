@@ -1,19 +1,35 @@
 cff-version: 1.2.0
-title: "Cross-organ leaf-to-peel framework for citrus peel aroma prediction"
+title: "A cross-organ proxy-phenotyping framework for inferring mature peel volatile phenotypes from leaf volatiles in citrus"
 message: "If you use this repository, please cite the code archive and the associated manuscript."
 type: software
+
 authors:
-  - family-names: "Manxi"
-    given-names: "Wu"
+  - family-names: "Wu"
+    given-names: "Manxi"
+  - family-names: "Yang"
+    given-names: "Han"
+  - family-names: "Cao"
+    given-names: "Jinping"
+  - family-names: "Sun"
+    given-names: "Chongde"
+  - family-names: "Wang"
+    given-names: "Yue"
+
 repository-code: "https://github.com/MancyW/citrus-cross-organ-aroma"
-abstract: "Code for cross-organ leaf-to-peel prediction of citrus peel aroma, including VOC profiling, predictive modeling, and odor-semantic analyses."
+doi: "10.5281/zenodo.21476479"
+
+abstract: "Code supporting organ-resolved volatile profiling, cross-organ covariance analysis, cultivar-level leaf-to-peel proxy inference, transcriptome–VOC association analyses, and model-derived odor-semantic analyses in citrus."
+
 keywords:
   - citrus
-  - aroma
-  - VOC
+  - volatile organic compounds
+  - proxy phenotyping
+  - cross-organ inference
   - metabolomics
   - machine learning
   - odor semantics
+  - transcriptomics
+
 license: MIT
 version: "v1.0.0"
-date-released: 2026-03-18
+date-released: 2026-07-21

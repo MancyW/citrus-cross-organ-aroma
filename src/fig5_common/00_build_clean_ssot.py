@@ -4,9 +4,9 @@ import argparse
 
 from pathlib import Path
 
-from nc_scripts.common.paths import find_repo_root
+from .paths import find_repo_root
 
-from nc_scripts.common import dataio
+from . import dataio
 
 def main():
 

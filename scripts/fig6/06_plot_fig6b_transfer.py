@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.patches import FancyArrowPatch
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 MID  = ROOT / "intermediate"
 

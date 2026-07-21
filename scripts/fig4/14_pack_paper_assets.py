@@ -128,7 +128,7 @@ def main():
 
             copy_if_exists(src, dst, manifest, kind="figure")
 
-    cfgs = [Path("configs/base.yaml"), Path("configs/fitall.yaml")]
+    cfgs = [Path("configs/fig4/base.yaml"), Path("configs/fig4/fitall.yaml")]
 
     for src in cfgs:
 

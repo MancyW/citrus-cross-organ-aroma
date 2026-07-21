@@ -6,7 +6,7 @@ from pathlib import Path
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 MID  = ROOT / "intermediate"
 

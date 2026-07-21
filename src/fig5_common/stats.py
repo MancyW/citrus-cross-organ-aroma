@@ -4,11 +4,13 @@ import numpy as np
 
 import pandas as pd
 
+def rankdata_average_ties(a: np.ndarray) -> np.ndarray:
+    """Return average ranks, with ties assigned their average rank."""
+    s = pd.Series(np.asarray(a))
+    return s.rank(method="average").to_numpy(dtype=float)
+
 def _rankdata(a: np.ndarray) -> np.ndarray:
-
-    s = pd.Series(a)
-
-    return s.rank(method="average").to_numpy()
+    return rankdata_average_ties(a)
 
 def spearmanr(x: np.ndarray, y: np.ndarray) -> float:
 

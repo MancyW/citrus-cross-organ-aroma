@@ -1,4 +1,4 @@
-import os, re, inspect, urllib.request
+import os, re, inspect
 
 import numpy as np
 
@@ -24,15 +24,13 @@ except Exception:
 
     HAS_IMB = False
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 DATA = ROOT / "data"
 
 MODEL_DIR = ROOT / "models" / "openpom_ckpt"
 
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
-
-CURATED_URL = "URL_PLACEHOLDER"
 
 def guess_smiles_field(df: pd.DataFrame) -> str:
 
@@ -153,10 +151,11 @@ def main(nb_epoch=8, seed=1):
     curated = DATA / "curated_GS_LF_merged_4983.csv"
 
     if not curated.exists():
-
-        print(f"[INFO] downloading curated dataset from: {CURATED_URL}")
-
-        urllib.request.urlretrieve(CURATED_URL, curated)
+        raise FileNotFoundError(
+            f"Missing curated odor dataset: {curated}. "
+            "Download curated_GS_LF_merged_4983.csv from its public source "
+            "and place it in the repository data directory before training."
+        )
 
     df = pd.read_csv(curated)
 

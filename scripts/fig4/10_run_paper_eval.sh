@@ -57,7 +57,7 @@ run_one () {
     return 0
   fi
 
-  python scripts/ideotype_weighted_eval.py \
+  python scripts/fig4/ideotype_weighted_eval.py \
     --run_dir "${run_dir}" \
     --anchor "${ANCHOR}" \
     --use_thresh \

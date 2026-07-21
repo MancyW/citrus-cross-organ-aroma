@@ -1,23 +1,27 @@
-# Cross-organ leaf-to-peel framework for citrus peel aroma prediction
+# A cross-organ proxy-phenotyping framework for inferring mature peel volatile phenotypes from leaf volatiles in citrus
 
 ## Overview
 This repository contains the curated code used to generate the main analyses and figure panels for the manuscript:
 
-**Cross-organ leaf-to-peel framework for citrus peel aroma prediction**
+**A cross-organ proxy-phenotyping framework for inferring mature peel volatile phenotypes from leaf volatiles in citrus**
 
-The study integrates organ-resolved VOC profiling, cross-organ correlation analysis, predictive modeling, and odor-semantic embedding to connect leaf volatile information with mature peel aroma phenotypes in citrus.
+The study integrates organ-resolved VOC profiling, cross-organ covariance analysis, cultivar-level proxy inference, and model-derived odor-semantic analysis to test whether leaf volatile profiles carry information about mature peel volatile phenotypes in citrus.
 
 This repository is intentionally code-focused. The processed data package and journal Source Data files are deposited separately in Zenodo.
 
 ## Repository scope
-The repository contains code corresponding to six main figures:
+The repository contains code supporting six main figures and four supplementary figures:
 
 - **Fig. 1** — Peel VOC profiling across developmental stages
 - **Fig. 2** — Leaf VOC profiling across developmental stages
 - **Fig. 3** — Cross-organ ordination, overlap, covariance, and module-level coupling
-- **Fig. 4** — Stage-selective prediction framework and ideotype ranking
+- **Fig. 4** — Stage-selective proxy inference framework and cultivar ranking
 - **Fig. 5** — Model benchmarking, interpretability, and applicability diagnostics
 - **Fig. 6** — Odor-semantic embedding, descriptor shift, retrieval, and robustness
+- **Supplementary Fig. 1** — Peel-S4 chemotype-blocked extrapolation stress test
+- **Supplementary Fig. 2** — Original-space validation of cross-organ odor-semantic transfer
+- **Supplementary Fig. 3** — Cross-organ transcriptomic coordination between leaf and peel
+- **Supplementary Fig. 4** — Module-level transcriptome–VOC associations
 
 The current release is a curated code archive. It retains the core analysis scripts and minimal supporting configuration files required to understand and reproduce the main computational workflow.
 
@@ -29,7 +33,7 @@ To run the code, place the processed data files from the Zenodo data release int
 ### External data package
 Processed data and Source Data files are available at:
 
-- **Zenodo data DOI:** `10.5281/zenodo.19095346`
+- **Zenodo archive DOI:** `10.5281/zenodo.21476479`
 
 ### Journal-facing Source Data
 The final figure-linked Source Data workbooks are deposited separately and correspond to:
@@ -57,6 +61,7 @@ scripts/
   fig4/
   fig5/
   fig6/
+  suppfig/
 
 src/
   fig4/
@@ -70,7 +75,7 @@ src/
 ```
 
 ### `configs/fig4/`
-Configuration files used in the Fig. 4 predictive-modeling workflow.
+Configuration files used in the Fig. 4 proxy-inference workflow.
 
 ### `scripts/fig1/`
 Panel-level scripts for peel VOC analysis, including representative TIC display, PLS-DA, heatmap generation, family-level summaries, marker selection, clustering, and marker-specific matrix panels.
@@ -82,13 +87,16 @@ Panel-level scripts for leaf VOC analysis, including representative TIC display,
 Scripts for cross-organ ordination, VOC overlap, covariance network construction, representative pair analysis, and Sankey-style module/axis summaries.
 
 ### `scripts/fig4/`
-Shell and Python scripts for the predictive-modeling workflow, including SSOT construction, panel sweep, final model execution, robustness analysis, paired bootstrap comparison, and paper-figure generation.
+Shell and Python scripts for the cultivar-level proxy-inference workflow, including SSOT construction, panel sweep, final model execution, robustness analysis, paired bootstrap comparison, and paper-figure generation.
 
 ### `scripts/fig5/`
 Scripts for baseline benchmarking, interpretability analysis, dynamics analysis, failure / applicability analysis, bootstrap comparison, and permutation-based null evaluation.
 
 ### `scripts/fig6/`
 Scripts for odor-semantic analysis, including input preparation, OpenPOM-style training or inference, descriptor-probability construction, QC filtering, retrieval evaluation, robustness analysis, and final figure assembly.
+
+### `scripts/suppfig/`
+Scripts and documentation supporting Supplementary Figs. 1–4. Supplementary Figs. 1 and 2 are grouped as a shared model-validation and odor-semantic support module, whereas Supplementary Figs. 3 and 4 are grouped as a shared transcriptome–VOC support module.
 
 ### `src/fig4/`
 Reusable modules for Fig. 4, including:
@@ -118,7 +126,7 @@ models/
 output/
 ```
 
-At minimum, users should check the relevant script before execution and adapt file paths as needed for their local environment.
+At minimum, users should check the relevant script before execution and provide the required input and output paths through the documented configuration files or command-line arguments for their local environment.
 
 ## Figure-specific entry points
 
@@ -151,7 +159,7 @@ Main scripts in `scripts/fig3/`:
 - `01_ordination_panel.py`
 - `02_overlap_panel.py`
 - `03_network_panel.py`
-- `04_representative_pairs_panel.py`
+- `04_representative_pairs_panel_with_SEM.py`
 - `05_sankey_panel.py`
 
 These scripts implement the cross-organ analysis layer, including ordination, repertoire overlap, network analysis, representative pair tracking, and higher-level Sankey-style aggregation.
@@ -160,7 +168,6 @@ These scripts implement the cross-organ analysis layer, including ordination, re
 Main scripts in `scripts/fig4/` include:
 - `01_build_ssot.sh`
 - `02_run_panel_sweep.sh`
-- `03_run_final.sh`
 - `04_panel_robustness_report.sh`
 - `05_summarize_all_panels.py`
 - `06_panel_selection_bootstrap.py`
@@ -174,7 +181,7 @@ Main scripts in `scripts/fig4/` include:
 - `13_summarize_ideotype_ablations.py`
 - `14_pack_paper_assets.py`
 
-Together with `src/fig4/`, these files define the predictive-modeling and ideotype-ranking framework used in Fig. 4.
+Together with `src/fig4/`, these files define the proxy-inference and cultivar-ranking framework used in Fig. 4.
 
 ### Fig. 5
 Main scripts in `scripts/fig5/` include:
@@ -182,13 +189,10 @@ Main scripts in `scripts/fig5/` include:
 - `01_interpretability.py`
 - `01_dynamics_analysis.py`
 - `01_failure_analysis.py`
-- `01_make_biomarkers_and_sankey.py`
-- `01_stage_dynamics_summary.py`
 - `10_bootstrap_ai_vs_bestbaseline.py`
 - `11_doa_error_model.py`
 - `11_permutation_null.py`
 - `run_nc_all.sh`
-- `run_nc_supplements.sh`
 
 These scripts implement the baseline comparison, interpretability, dynamic/static decomposition, failure-aware analysis, and null benchmarking reported in Fig. 5.
 
@@ -206,6 +210,13 @@ Main scripts in `scripts/fig6/` include:
 - `10_make_fig6_final_panels.py`
 
 These scripts implement the odor-semantic analysis workflow, from descriptor model preparation to final panel generation.
+
+### Supplementary Figures 1–4
+
+- `01_suppfig1_2_model_and_odor_semantic/` contains the model-validation and original-space odor-semantic support scripts associated with Supplementary Figs. 1 and 2. Processed figure-support tables are provided in the Zenodo archive.
+- `02_suppfig3_4_transcriptome_voc_support/` contains transcriptome preprocessing, WGCNA, pathway-level coordination, module–VOC association, candidate-triplet prioritization, and plotting workflows supporting Supplementary Figs. 3 and 4.
+
+Processed inputs and figure-support tables are available from the Zenodo data archive.
 
 ## Software environment
 The scripts depend on standard scientific Python packages together with several specialized packages used in the semantic-analysis module.
@@ -234,8 +245,8 @@ Because this repository is a curated extraction of the original analysis code, u
 1. **Data are external to this repository.**  
    The code assumes that processed data are available locally after download from the Zenodo data release.
 
-2. **Some scripts retain module-structured imports from the original project.**  
-   Depending on the final repository layout, users may need to adjust package paths or execution context before running selected modules, especially in Fig. 5 and Fig. 4 workflows.
+2. **Run module-based workflows from the repository root.**  
+   Reusable Fig. 4 and Fig. 5 modules are included under `src/`. Run the documented module entry points from the repository root so that local packages are resolved consistently. Users may configure input and output paths, but should not need to edit Python import paths.
 
 3. **Figure 4 and Fig. 5 are the most workflow-oriented modules.**  
    These parts are best run as project pipelines rather than as isolated single scripts.
@@ -255,10 +266,6 @@ A practical order for reuse is:
 4. Run the Fig. 4 workflow using the provided configuration files.
 5. Run Fig. 5 benchmarking and diagnostics using the selected model outputs.
 6. Use the Fig. 6 scripts if semantic-model dependencies are available.
-
-## Citation
-Code DOI: 10.5281/zenodo.19095346
-Data DOI: 10.5281/zenodo.19095729
 
 ## Contact
 For questions about code execution, processed data dependencies, or raw-data access, please contact the corresponding author listed in the manuscript.

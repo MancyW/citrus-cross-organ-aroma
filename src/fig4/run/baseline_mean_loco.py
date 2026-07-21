@@ -8,7 +8,7 @@ import numpy as np
 
 import pandas as pd
 
-from src.cv.loco import iter_loco
+from src.fig4.cv.loco import iter_loco
 
 def cosine(a: np.ndarray, b: np.ndarray, eps: float = 1e-12) -> float:
 

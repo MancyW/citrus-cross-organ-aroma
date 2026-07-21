@@ -404,14 +404,26 @@ def assign_axis(row) -> str:
 
         return "Fatty-acid–derived aldehyde coordination axis"
 
-    if ("monoterpen" in lf) or ("monoterpen" in pf) or ("sesquiterpen" in lf) or ("sesquiterpen" in pf)
-       or ("terpen" in lp) or ("terpen" in pp):
-
+    if (
+        ("monoterpen" in lf)
+        or ("monoterpen" in pf)
+        or ("sesquiterpen" in lf)
+        or ("sesquiterpen" in pf)
+        or ("terpen" in lp)
+        or ("terpen" in pp)
+    ):
         return "Terpenoid coordination axis"
 
-    if ("benzen" in lp) or ("benzen" in pp) or ("phenyl" in lp) or ("phenyl" in pp)
-       or ("benzenoid" in lf) or ("benzenoid" in pf) or ("shikimate" in lp) or ("shikimate" in pp):
-
+    if (
+        ("benzen" in lp)
+        or ("benzen" in pp)
+        or ("phenyl" in lp)
+        or ("phenyl" in pp)
+        or ("benzenoid" in lf)
+        or ("benzenoid" in pf)
+        or ("shikimate" in lp)
+        or ("shikimate" in pp)
+    ):
         return "Aromatic-related coordination axis"
 
     return "Mixed / low-coherence axis"

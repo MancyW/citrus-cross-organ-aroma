@@ -14,11 +14,11 @@ import pandas as pd
 
 import yaml
 
-from src.models.hurdle import HurdleRegressor
+from src.fig4.models.hurdle import HurdleRegressor
 
-from src.cv.loco import iter_loco
+from src.fig4.cv.loco import iter_loco
 
-from src.utils.seed import set_global_seed
+from src.fig4.utils.seed import set_global_seed
 
 def read_yaml(p: str | Path) -> dict:
 
@@ -174,7 +174,7 @@ def main():
 
     ap = argparse.ArgumentParser()
 
-    ap.add_argument("--config", default="configs/base.yaml")
+    ap.add_argument("--config", default="configs/fig4/base.yaml")
 
     ap.add_argument("--panel", default="S1", help="e.g., S1 or S1+S2")
 
