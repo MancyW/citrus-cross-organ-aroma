@@ -16,7 +16,6 @@ authors:
     given-names: "Yue"
 
 repository-code: "https://github.com/MancyW/citrus-cross-organ-aroma"
-doi: "10.5281/zenodo.21476479"
 
 abstract: "Code supporting organ-resolved volatile profiling, cross-organ covariance analysis, cultivar-level leaf-to-peel proxy inference, transcriptome–VOC association analyses, and model-derived odor-semantic analyses in citrus."
 
@@ -31,5 +30,5 @@ keywords:
   - transcriptomics
 
 license: MIT
-version: "v1.0.0"
+version: "v1.1.0"
 date-released: 2026-07-21
